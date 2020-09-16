@@ -15,7 +15,7 @@ class CheckCompany
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->user()->is_company){
+        if (auth()->user()){
             return $next($request);
         }else{
             abort(403,'You are not authorized for this operation!');
