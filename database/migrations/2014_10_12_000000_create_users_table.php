@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->boolean('is_company')->default(false);
             $table->string('business_name')->nullable();
             $table->string('image')->nullable();
+            $table->string('resume')->nullable();
             $table->text('skills')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

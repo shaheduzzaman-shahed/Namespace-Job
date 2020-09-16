@@ -15,12 +15,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:api')->group(function(){
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-
+    Route::get('/user', 'Api\UserController@getUser');
+    Route::put('/updateUser', 'Api\UserController@updateUser');
     Route::post('/logout','Api\AuthController@logout');
+    Route::get('/applyJob/{id}','Api\ApplicationController@applyJob');
+
+    //Post Route
+    Route::apiResource('/post','Api\PostController')->middleware('checkCompany');
+    Route::get('/getCompanyApplications','Api\CompanyController@getCompanyApplications')->middleware('checkCompany');
+
 });
 
 Route::post('/login','Api\AuthController@login');
 Route::post('/register','Api\AuthController@register');
+
+//home page routes
+Route::get('/getAllPost','Api\HomepageController@getAllPost');

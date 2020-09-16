@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -35,17 +37,25 @@ class AuthController extends Controller
 
     }
 
-    public function register(UserRequest $request){
+    public function register(Request $request){
+        $this->validate($request,[
+           'first_name' => 'required',
+           'last_name' => 'required',
+           'email' => 'required',
+           'password' => 'required',
+        ]);
         $user = new User;
-        $user->name = $request->name;
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
         $user->email = $request->email;
-        $user->phone_number = $request->phone_number;
+        $user->business_name = $request->business_name;
+        $user->is_company = $request->is_company;
         $user->password = Hash::make($request->password);
 
         try {
             $user->save();
 //            $user->image()->create(['link' => $request->image]);
-            $client = new Client();
+            $client = new \GuzzleHttp\Client();
             $response = $client->request('POST', url("/api/login"), [
                 'form_params' => [
                     'username' => $request->email,
@@ -54,7 +64,7 @@ class AuthController extends Controller
             ]);
             return json_decode((string) $response->getBody(), true);
         } catch (\Exception $e) {
-            return $this->sendError($e);
+            return response()->json($e);
         }
 
     }
