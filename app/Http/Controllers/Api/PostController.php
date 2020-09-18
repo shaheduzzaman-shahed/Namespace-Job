@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
+use App\Http\Resources\HomePageResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -48,7 +49,7 @@ class PostController extends Controller
         $post->user_id = auth()->user()->id;
         try{
             $post->save();
-            return response()->json($post);
+            return response()->json(new HomePageResource($post));
         }catch (\Exception $exception){
             return response()->json($exception);
         }
@@ -95,7 +96,7 @@ class PostController extends Controller
         $post->user_id = auth()->user()->id;
         try{
             $post->save();
-            return response()->json($post);
+            return response()->json(new HomePageResource($post));
         }catch (\Exception $exception){
             return response()->json($exception);
         }

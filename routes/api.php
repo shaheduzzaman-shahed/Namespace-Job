@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->group(function(){
     Route::get('/user', 'Api\UserController@getUser');
     Route::put('/updateUser', 'Api\UserController@updateUser');
-    Route::post('/logout','Api\AuthController@logout');
+    Route::get('/logout','Api\AuthController@logout');
     Route::get('/applyJob/{id}','Api\ApplicationController@applyJob');
 
     //Post Route
