@@ -18,7 +18,7 @@ class UserController extends Controller
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->business_name = $request->business_name;
-        $user->skills = $request->skills;
+        $user->skills = $request->skills != 'null' ? $request->skills : null;
         if($file = $request->file('image')) {
             $request->validate([
                 'image'=>'image|mimes:jpeg,png,jpg,gif,svg|max:2048',

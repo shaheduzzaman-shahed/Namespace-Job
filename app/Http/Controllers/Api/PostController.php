@@ -112,6 +112,7 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         try{
+            $post->applications()->delete();
             $post->delete();
             return response()->json($post);
         }catch (\Exception $exception){
